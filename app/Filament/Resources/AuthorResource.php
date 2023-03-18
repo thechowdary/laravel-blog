@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\RichEditor;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -97,10 +98,16 @@ class AuthorResource extends Resource
                     ->label(__('email'))
                     ->searchable()
                     ->sortable(),
-                // TextColumn::make( function ($state) {
-                //     return Post::where('author_id', $state)->count();
-                // }),
-                ViewColumn::make('Posts')->view('filament.columns.posts-author-count-column'),
+                
+                // Both BadgeColumn & ViewColumn works fine. But with BadgeColumn we can enjoy sortable and other options
+                BadgeColumn::make('posts_count')
+                    ->label('Posts')
+                    ->sortable()
+                    ->counts('posts'),
+
+                // Use above BadgeColumn for real projects. Just used this here to show how to make our own custom columns
+                //ViewColumn::make('Posts')->view('filament.columns.posts-author-count-column'),
+                
                 Tables\Columns\TextColumn::make('github_handle')
                     ->label(__('github')),
                 Tables\Columns\TextColumn::make('updated_at')

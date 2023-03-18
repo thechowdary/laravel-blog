@@ -83,7 +83,16 @@ class CategoryResource extends Resource
                     ->label(__('slug'))
                     ->searchable()
                     ->sortable(),
+                
+                // Both BadgeColumn & ViewColumn works fine. But with BadgeColumn we can enjoy sortable and other options
+                // BadgeColumn::make('posts_count')
+                //     ->label('Posts')
+                //     ->sortable()
+                //     ->counts('posts'),
+
+                // Use above BadgeColumn for real projects. Just used this here to show how to make our own custom columns
                 ViewColumn::make('Posts')->view('filament.columns.posts-category-count-column'),
+
                 ToggleColumn::make('is_visible')
                     ->label(__('visibility')),
                 Tables\Columns\TextColumn::make('updated_at')
