@@ -25,12 +25,22 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
+use App\Filament\Resources\PostResource\Widgets\LatestPosts;
+
 
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationLabel = 'All Posts';
+
+    protected static ?string $navigationGroup = 'Blog';
+
+    protected static ?string $slug = 'my-posts';
 
     public static function form(Form $form): Form
     {
@@ -44,19 +54,19 @@ class PostResource extends Resource
                     })->required(),
                 TextInput::make('slug')->required(),
                 FileUpload::make('image')->image(),
-                RichEditor::make('content')->required(),
+                RichEditor::make('content'),
                 Toggle::make('is_published'),
                 Forms\Components\BelongsToSelect::make('author_id')
                             ->label(__('Author'))
                             ->relationship('author', 'name')
-                            ->searchable()
-                            ->required(),
+                            ->searchable(),
+                            //->required(),
 
                 Forms\Components\BelongsToSelect::make('category_id')
                     ->label(__('Category'))
                     ->relationship('category', 'name')
-                    ->searchable()
-                    ->required(),
+                    ->searchable(),
+                    //->required(),
 
                 
             ])
@@ -119,5 +129,19 @@ class PostResource extends Resource
         session()->flash('success', 'Image Upload successfully');
 
         return redirect()->route('image.index');
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            LatestPosts::class,
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            LatestPosts::class,
+        ];
     }
 }

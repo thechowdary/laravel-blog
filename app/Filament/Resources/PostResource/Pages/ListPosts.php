@@ -12,6 +12,7 @@ class ListPosts extends ListRecords
 
     protected function getActions(): array
     {
+        PostResource::getWidgets();
         return [
             Actions\CreateAction::make(),
         ];
