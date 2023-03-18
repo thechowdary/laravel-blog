@@ -12,6 +12,8 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\RichEditor;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -81,7 +83,8 @@ class CategoryResource extends Resource
                     ->label(__('slug'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\BooleanColumn::make('is_visible')
+                ViewColumn::make('Posts')->view('filament.columns.posts-category-count-column'),
+                ToggleColumn::make('is_visible')
                     ->label(__('visibility')),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('last_updated'))

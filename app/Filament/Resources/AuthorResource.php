@@ -15,6 +15,10 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\ViewColumn;
+use Illuminate\Support\Facades\View;
+
+
 
 class AuthorResource extends Resource
 {
@@ -93,11 +97,15 @@ class AuthorResource extends Resource
                     ->label(__('email'))
                     ->searchable()
                     ->sortable(),
-                
+                // TextColumn::make( function ($state) {
+                //     return Post::where('author_id', $state)->count();
+                // }),
+                ViewColumn::make('Posts')->view('filament.columns.posts-author-count-column'),
                 Tables\Columns\TextColumn::make('github_handle')
                     ->label(__('github')),
-                Tables\Columns\TextColumn::make('twitter_handle')
-                    ->label(__('twitter')),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label(__('last_updated'))
+                    ->date(),
             ])
             ->filters([
                 //
