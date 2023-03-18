@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AuthorResource\Pages;
 use App\Filament\Resources\AuthorResource\RelationManagers;
+use App\Filament\Resources\AuthorResource\RelationManagers\PostsRelationManager;
 use App\Models\Author;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -11,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\RichEditor;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -47,7 +49,7 @@ class AuthorResource extends Resource
                             'sm' => 2,
                         ]),
                     //self::getContentEditor('bio'),
-                    RichEditor::make('bio')->required(),
+                    RichEditor::make('bio')->required()->columnSpan(2),
                     Forms\Components\TextInput::make('github_handle')
                         ->label(__('github')),
                     Forms\Components\TextInput::make('twitter_handle')
@@ -91,6 +93,7 @@ class AuthorResource extends Resource
                     ->label(__('email'))
                     ->searchable()
                     ->sortable(),
+                
                 Tables\Columns\TextColumn::make('github_handle')
                     ->label(__('github')),
                 Tables\Columns\TextColumn::make('twitter_handle')
@@ -110,7 +113,7 @@ class AuthorResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PostsRelationManager::class,
         ];
     }
     
@@ -119,6 +122,7 @@ class AuthorResource extends Resource
         return [
             'index' => Pages\ListAuthors::route('/'),
             'create' => Pages\CreateAuthor::route('/create'),
+            'view' => Pages\ViewAuthor::route('/{record}'),
             'edit' => Pages\EditAuthor::route('/{record}/edit'),
         ];
     }    

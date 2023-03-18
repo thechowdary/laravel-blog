@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Resources\CategoryResource\RelationManagers\PostsRelationManager;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -51,8 +52,8 @@ class CategoryResource extends Resource
                         'md' => 1,
                     ])
                     ->columnSpan([
-                        'sm' => 3,
-                        'md' => 3,
+                        'sm' => 2,
+                        'md' => 2,
                     ]),
                 Forms\Components\Card::make()
                     ->schema([
@@ -100,7 +101,7 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PostsRelationManager::class,
         ];
     }
     
@@ -109,6 +110,7 @@ class CategoryResource extends Resource
         return [
             'index' => Pages\ListCategories::route('/'),
             'create' => Pages\CreateCategory::route('/create'),
+            'view' => Pages\ViewCategory::route('/{record}'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }    
