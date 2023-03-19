@@ -26,6 +26,8 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Resources\PostResource\Widgets\LatestPosts;
+use App\Filament\Resources\PostResource\Widgets\PostsStatsOverview;
+use App\Filament\Widgets\BlogPostsChart;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ToggleColumn;
 
@@ -156,14 +158,8 @@ class PostResource extends Resource
     public static function getWidgets(): array
     {
         return [
-            LatestPosts::class,
+            PostsStatsOverview::class,
         ];
     }
 
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            LatestPosts::class,
-        ];
-    }
 }
