@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-//use App\Models\User;
+
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -80,10 +80,9 @@ class UserPolicy
      * Determine whether the user can permanently delete.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Category  $category
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Category $category)
+    public function forceDelete(User $user)
     {
         return $user->can('force_delete_user');
     }
@@ -103,10 +102,9 @@ class UserPolicy
      * Determine whether the user can restore.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Category  $category
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Category $category)
+    public function restore(User $user)
     {
         return $user->can('restore_user');
     }
@@ -123,13 +121,12 @@ class UserPolicy
     }
 
     /**
-     * Determine whether the user can replicate.
+     * Determine whether the user can bulk restore.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Category  $category
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function replicate(User $user, Category $category)
+    public function replicate(User $user)
     {
         return $user->can('replicate_user');
     }
@@ -144,5 +141,4 @@ class UserPolicy
     {
         return $user->can('reorder_user');
     }
-
 }

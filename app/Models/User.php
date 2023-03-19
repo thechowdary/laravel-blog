@@ -14,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use JeffGreco13\FilamentBreezy\Traits\TwoFactorAuthenticatable;
 
-class User extends Authenticatable implements HasAvatar
+class User extends Authenticatable implements HasAvatar, FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable, HasFilamentShield, TwoFactorAuthenticatable;
     //use FilamentUser, HasAvatar, HasName;
@@ -51,7 +51,7 @@ class User extends Authenticatable implements HasAvatar
 
     public function canAccessFilament(): bool
     {
-        return $this->hasRole('super_admin');
+        return true;//$this->hasRole('super_admin');
     }
 
     public function getFilamentAvatarUrl(): ?string
