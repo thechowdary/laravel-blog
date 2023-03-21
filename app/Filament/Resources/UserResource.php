@@ -22,7 +22,7 @@ use Filament\Resources\Pages\EditRecord;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\IconColumn;
 use Illuminate\Support\Facades\Hash;
-
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource 
 {
@@ -75,7 +75,7 @@ class UserResource extends Resource
                 TextColumn::make('id')->sortable()->searchable(),
                 TextColumn::make('name')->limit(20)->sortable()->searchable(),
                 TextColumn::make('email')->limit(50)->sortable()->searchable(),
-                TextColumn::make('roles.name')->limit(50)->sortable()->searchable(),
+                TextColumn::make('roles.name')->limit(50)->searchable(),
                 IconColumn::make('email_verified_at')->boolean()->label('Verified')->sortable(),
                 TextColumn::make('created_at'),
             ])
@@ -83,6 +83,9 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                Impersonate::make('impersonate')
+                    //->guard('web'),
+                    ->redirectTo(route('filament.pages.dashboard')),
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
